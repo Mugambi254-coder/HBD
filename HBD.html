@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(135deg,#ff4b8b,#ff7eb3,#ffd166);
+color:white;
+overflow-x:hidden;
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:30px;
+text-align:center;
+}
+
+.hero h1{
+font-size:4rem;
+animation:glow 2s infinite alternate;
+}
+
+.hero p{
+font-size:1.4rem;
+margin-top:20px;
+}
+
+@keyframes glow{
+from{ text-shadow:0 0 10px white; }
+to{ text-shadow:0 0 40px gold; }
+}
+
+.btn{
+padding:15px 30px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+background:white;
+color:#ff4081;
+font-weight:bold;
+margin-top:20px;
+}
+
+.card{
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(10px);
+padding:30px;
+border-radius:20px;
+max-width:800px;
+}
+
+.gallery{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.gallery img{
+width:250px;
+height:250px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 0 20px rgba(255,255,255,.4);
+transition:.5s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+.timeline{
+max-width:700px;
+text-align:left;
+}
+
+.timeline div{
+margin:20px 0;
+padding:20px;
+background:rgba(255,255,255,.15);
+border-radius:15px;
+}
+
+#giftMessage{
+display:none;
+margin-top:20px;
+font-size:1.3rem;
+}
+
+.cake{
+font-size:120px;
+}
+
+#letter{
+font-size:1.3rem;
+line-height:2;
+max-width:700px;
+}
+
+.floating{
+position:fixed;
+top:-10px;
+animation:fall linear infinite;
+opacity:.7;
+pointer-events:none;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+}
+}
+
+.countdown{
+font-size:2rem;
+margin-top:20px;
+}
+
+.final{
+font-size:3rem;
+font-weight:bold;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+audio{
+margin-top:20px;
+}
+
+@media(max-width:768px){
+.hero h1{
+font-size:2.5rem;
+}
+}
+</style>
+</head>
+
+<body>
+
+    
+
+<canvas id="fireworks"></canvas>
+
+<section class="hero">
+
+<h1>🎂 Happy Birthday KATE ❤️</h1>
+
+<p>
+Today is your special day.
+May happiness, love and success
+follow you wherever life takes you.
+✨🌹🎉
+</p>
+
+<div class="countdown" id="countdown"></div>
+
+<audio controls>
+<source src="stat/audio/happy_birthday_-_birthday_by_anne-marie_(mp3.pm).mp3" type="audio/mpeg">
+</audio>
+
+</section>
+
+<section>
+
+<div class="card">
+<h2>💌 A Special Letter</h2>
+<br>
+<p id="letter"></p>
+</div>
+
+</section>
+
+<section>
+
+<h2>📸 Beautiful Memories</h2>
+
+<br>
+
+<div class="gallery">
+
+<img src="static/images/WhatsApp Image 2026-06-02 at 7.13.42 PM(1).jpeg">
+<img src="static/images/WhatsApp Image 2026-06-02 at 7.13.42 PM(2).jpeg">
+<img src="static/images/WhatsApp Image 2026-06-02 at 7.13.42 PM.jpeg">
+<img src="static/images/WhatsApp Image 2026-06-02 at 7.13.43 PM.jpeg">
+
+</div>
+
+</section>
+
+<section>
+
+<h2>🎁 Surprise Gift</h2>
+
+<button class="btn" onclick="openGift()">
+Open Gift
+</button>
+
+<div id="giftMessage">
+    NO GIFT BUT...<br><br>
+🌹 You are one of the most amazing people in my life.<br><br>
+May every dream you have come true.<br><br>
+❤️ Happy Birthday ❤️
+</div>
+
+</section>
+
+<section>
+
+<h2>🎂 Make A Wish</h2>
+
+<div class="cake" id="cake">
+🕯️🕯️🕯️<br>
+🎂
+</div>
+
+<button class="btn" onclick="blowCandles()">
+Blow Candles
+</button>
+
+</section>
+
+<section>
+
+<h2>🕰️ Our Story</h2>
+
+<div class="timeline">
+
+<div>
+✨ The Day We Met....Actuall siku ulinisongea😜😜😜😜
+</div>
+
+<div>
+❤️ Our First Conversation....ulikua umenyamaza tuu😜😜😜 lkn who am I
+</div>
+
+<div>
+🌹 Favorite Memory Together....kunayo maybe tukisengenya Status😜😹😹
+</div>
+
+<div>
+🎂 Celebrating Your Birthday Today
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="final">
+🎆 HAPPY BIRTHDAY KATE❤️🎆
+<br><br>
+May your life always shine as brightly as you do.
+</div>
+
+</section>
+
+<script>
+
+// floating hearts
+
+function createHeart(){
+
+let heart=document.createElement("div");
+
+heart.innerHTML=["❤️","✨","🎈","🌹"][Math.floor(Math.random()*4)];
+
+heart.className="floating";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=(20+Math.random()*30)+"px";
+
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},10000);
+}
+
+setInterval(createHeart,300);
+
+
+// typewriter
+
+const text=`Happy Birthday ❤️
+
+May this year bring you endless joy, unforgettable memories, and every blessing your heart desires.
+
+Thank you for being such a wonderful person.
+
+You deserve all the love, happiness and success in the world.
+
+Enjoy every moment of your special day. 🌹`;
+
+let i=0;
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("letter").innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(type,40);
+
+}
+
+}
+
+type();
+
+
+// gift
+
+function openGift(){
+
+document.getElementById("giftMessage").style.display="block";
+
+}
+
+
+// cake
+
+function blowCandles(){
+
+document.getElementById("cake").innerHTML="🎂";
+
+launchFireworks();
+
+}
+
+
+const birthday = new Date("June 1, 2026 00:00:00").getTime();
+
+setInterval(() => {
+
+    const now = new Date().getTime();
+    const difference = now - birthday; // time elapsed since birthday
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((difference % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        `🎂 Birthday was ${days} day(s), ${hours} hour(s), ${mins} minute(s), and ${secs} second(s) ago ❤️`;
+
+}, 1000);
+
+
+// fireworks
+
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function launchFireworks(){
+
+for(let i=0;i<100;i++){
+
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height;
+
+ctx.beginPath();
+ctx.arc(x,y,4,0,Math.PI*2);
+
+ctx.fillStyle=`hsl(${Math.random()*360},100%,50%)`;
+
+ctx.fill();
+
+}
+
+setTimeout(()=>{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+},2000);
+
+}
+
+</script>
+
+</body>
+</html>
